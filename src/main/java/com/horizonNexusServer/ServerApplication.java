@@ -1,11 +1,10 @@
 package com.horizonNexusServer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
 
 public class ServerApplication {
     public static void main(String[] args) throws IOException {
@@ -36,6 +35,26 @@ public class ServerApplication {
                             host = line.split(":")[1].strip();
                             System.out.println(host);
                         }
+                    }
+
+                    OutputStream os = localsocket.getOutputStream();
+
+                    String head = "";
+                    Path index=null;
+                    String content = "";
+
+                    if(!command.equalsIgnoreCase("get")) {
+                        head = """
+                                HTTP/1.1 405 Method Not Allowed
+                                Server: Horizon Nexus Server
+                                Date:%s
+                                Content-Type: text/html
+                                
+                                """.formatted(LocalDateTime.now());
+
+                        os.write(head.getBytes());
+                        os.flush();
+
                     }
                 }
                 catch (Exception e) {
