@@ -28,6 +28,15 @@ public class ServerApplication {
                     String command = s[0];
                     String path = s[1];
                     System.out.println(command + " " + path);
+
+                    String line;
+                    String host;
+                    while ((line = br.readLine())!= null && !line.isEmpty()){
+                        if(line.split(":")[0].strip().equalsIgnoreCase("host")){
+                            host = line.split(":")[1].strip();
+                            System.out.println(host);
+                        }
+                    }
                 }
                 catch (Exception e) {
                     throw new RuntimeException(e);
