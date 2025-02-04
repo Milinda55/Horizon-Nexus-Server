@@ -55,6 +55,21 @@ public class ServerApplication {
                         os.write(head.getBytes());
                         os.flush();
 
+                        content = """
+                                <!DOCTYPE html>
+                                <html>
+                                <head>
+                                <title>Horizon Nexus Server</title>
+                                </head>
+                                <body>
+                                <h1>500 Bad Request</h1>
+                                <h6>copyright (c) Horizon Nexus Server</h6>
+                                </body>
+                                </html>
+                                """;
+                        os.write(content.getBytes());
+                        os.flush();
+
                     }
                 }
                 catch (Exception e) {
