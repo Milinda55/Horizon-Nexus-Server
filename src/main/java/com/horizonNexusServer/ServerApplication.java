@@ -3,6 +3,7 @@ package com.horizonNexusServer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
@@ -29,7 +30,7 @@ public class ServerApplication {
                     System.out.println(command + " " + path);
 
                     String line;
-                    String host;
+                    String host = null;
                     while ((line = br.readLine())!= null && !line.isEmpty()){
                         if(line.split(":")[0].strip().equalsIgnoreCase("host")){
                             host = line.split(":")[1].strip();
@@ -69,6 +70,20 @@ public class ServerApplication {
                                 """;
                         os.write(content.getBytes());
                         os.flush();
+
+                    }
+
+                    else{
+
+                        if(path.equalsIgnoreCase("/")){
+                            index = Path.of("http", host, "index.html");
+
+                        }else {
+                            index = Path.of("http", host, path);
+                        }
+                        
+
+
 
                     }
                 }
