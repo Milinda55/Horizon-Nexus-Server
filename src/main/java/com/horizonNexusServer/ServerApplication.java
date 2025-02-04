@@ -81,9 +81,36 @@ public class ServerApplication {
                         }else {
                             index = Path.of("http", host, path);
                         }
-                        
+
+                        if(!Files.exists(index)) {
+                            head = """
+                                    HTTP/1.1 404 Not Found
+                                    Server: Horizon Nexus Server
+                                    Date:%s
+                                    Content-Type: text/html
+                                    
+                                    """.formatted(LocalDateTime.now());
+
+                            os.write(head.getBytes());
+                            os.flush();
+
+                            content = """
+                                    <!DOCTYPE html>
+                                    <html>
+                                    <head>
+                                    <title>Horizon Nexus Server</title>
+                                    </head>
+                                    <body>
+                                    <h1>404 Not Found index.html</h1>
+                                    
+                                    </body>
+                                    </html>
+                                    """;
+                            os.write(content.getBytes());
+                            os.flush();
 
 
+                        }
 
                     }
                 }
