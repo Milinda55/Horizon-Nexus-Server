@@ -108,6 +108,26 @@ public class ServerApplication {
                                     """;
                             os.write(content.getBytes());
                             os.flush();
+                        }
+                        else{
+                            head = """
+                                HTTP/1.1 200 OK
+                                Content-Type: %s
+                                
+                                """.formatted(Files.probeContentType(index));
+                            os.write(head.getBytes());
+                            os.flush();
+
+                            FileInputStream fis = new FileInputStream(index.toFile());
+                            BufferedInputStream bis = new BufferedInputStream(fis);
+
+
+                            byte[] buffer = new byte[1024];
+                            while (bis.read(buffer) != -1) {
+                                os.write(buffer);
+                                os.flush();
+                            }
+                            bis.close();
 
 
                         }
