@@ -22,6 +22,12 @@ public class ServerApplication {
                     InputStream inputStream = localsocket.getInputStream();
                     InputStreamReader isr = new InputStreamReader(inputStream);
                     BufferedReader br = new BufferedReader(isr);
+
+                    String commandLine = br.readLine();
+                    String[] s = commandLine.split(" ");
+                    String command = s[0];
+                    String path = s[1];
+                    System.out.println(command + " " + path);
                 }
                 catch (Exception e) {
                     throw new RuntimeException(e);
