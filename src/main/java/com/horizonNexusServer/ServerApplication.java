@@ -1,7 +1,11 @@
 package com.horizonNexusServer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class ServerApplication {
     public static void main(String[] args) throws IOException {
@@ -9,6 +13,21 @@ public class ServerApplication {
         System.out.println("Server started on port 80");
         System.out.println("Waiting for connections...");
 
+        while (true) {
+            Socket localsocket = serverSocket.accept();
+            System.out.println("Accepted connection from " + localsocket.getRemoteSocketAddress());
+
+            new Thread(() -> {
+                try {
+                    InputStream inputStream = localsocket.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(inputStream);
+                    BufferedReader br = new BufferedReader(isr);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        }
 
     }
 }
